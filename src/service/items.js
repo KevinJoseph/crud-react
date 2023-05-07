@@ -27,8 +27,8 @@ const create = (item) => {
             throw error;
         });
 };
-const update = (item) => {  
-    return axios.patch(`${API_URL}/items/${item.id}`, item)
+const update = (id,item) => {  
+    return axios.patch(`${API_URL}/items/${id}`, item)
         .then(response => response.data)
         .catch(error => {
             throw error;

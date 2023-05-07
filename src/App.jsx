@@ -13,7 +13,8 @@ function MainComponent() {
   const handleSave = async (item) => {
     try {
       if (selectedItem) {
-        updateItem(item)
+        const {id} = selectedItem
+        updateItem(id ,item)
       } else {
         addItem(item)
       }
@@ -40,7 +41,8 @@ function MainComponent() {
       <ul>
         {data.map((item, index) => (
           <li key={item.id}>
-            <span>{item.title}</span>
+            <span>{item.title} </span>
+            <span>{item.description}</span>
             <button onClick={() => deletedItem(item.id)}>Eliminar</button>
             <button onClick={() => selectItem(index)}>Editar</button>
           </li>

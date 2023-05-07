@@ -1,52 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 function FormItem({ elemento, onSave }) {
   
-  const [formData, setFormData] = useState({ title: '', description: '' });
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
 
   useEffect(() => {
-    if(elemento){
-        setFormData(elemento)
+    if (elemento) {
+      // Si hay un elemento, establece los valores iniciales del formulario
+      setValue('title', elemento.title);
+      setValue('description', elemento.description);
     }
-  }, [elemento]);
+  }, [elemento, setValue]);
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSave(formData);
-    setFormData({ title: '', description: '' });
+  const onSubmit = (data) => {
+    onSave(data);
+    reset(); // Restablece el formulario después de enviarlo
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
 
   return (
     <div>
       <h2>{elemento ? 'Actualizar elemento' : 'Crear elemento'}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="title">Título:</label>
           <input
             type="text"
             id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
+            {...register('title', { required: true })}
           />
+          {errors.title && <span>Título requerido</span>}
         </div>
         <div>
           <label htmlFor="description">Descripción:</label>
           <textarea
             id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
+            {...register('description', { required: true })}
           ></textarea>
+          {errors.description && <span>Descripción requerida</span>}
         </div>
         <button type="submit">{elemento ? 'Actualizar' : 'Agregar'}</button>
       </form>

@@ -9,8 +9,8 @@ export function useCrudData() {
             .then(newItem => setData(newItem))
     }
 
-    const updateItem = (item) => {
-        itemService.update(item)
+    const updateItem = (id,item) => {
+        itemService.update(id,item)
             .then(updatedItem => setData(updatedItem))
     }
 
