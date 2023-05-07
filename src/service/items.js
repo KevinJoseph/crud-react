@@ -20,7 +20,6 @@ const getItem = (id) => {
 }
 
 const create = (item) => {
-    console.log(item)
     return axios.post(`${API_URL}/items`,{title: item.title, description: item.description})
         .then(response => response.data)
         .catch(error => {
@@ -28,7 +27,7 @@ const create = (item) => {
         });
 };
 const update = (id,item) => {  
-    return axios.patch(`${API_URL}/items/${id}`, item)
+    return axios.patch(`${API_URL}/items/${id}`, {title: item.title, description: item.description})
         .then(response => response.data)
         .catch(error => {
             throw error;
